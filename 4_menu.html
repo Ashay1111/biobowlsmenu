@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIO BOWLS - Fresh. Bold. Delicious.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2d5016;
+            --accent: #ff6b35;
+            --bright: #7fb069;
+            --cream: #faf8f3;
+            --dark: #1a1a1a;
+            --gold: #ffd700;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { width: 60px; height: 60px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 40px; height: 40px; left: 60%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 80px; height: 80px; left: 80%; animation-delay: 4s; }
+        .particle:nth-child(4) { width: 30px; height: 30px; left: 30%; animation-delay: 6s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10%, 90% { opacity: 1; }
+            50% { transform: translateY(-20vh) rotate(180deg); }
+        }
+
+        /* Hero section with immersive design */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(45deg, rgba(45, 80, 22, 0.9), rgba(127, 176, 105, 0.8)),
+                        radial-gradient(circle at 30% 70%, rgba(255, 107, 53, 0.3) 0%, transparent 50%);
+            z-index: 10;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            animation: heroFadeIn 2s ease-out;
+        }
+
+        @keyframes heroFadeIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            letter-spacing: -2px;
+        }
+
+        .hero-tagline {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            background: linear-gradient(135deg, var(--accent), #ff8c42);
+            color: white;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.6);
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4); }
+            50% { box-shadow: 0 8px 30px rgba(255, 107, 53, 0.8); }
+        }
+
+        /* Menu sections */
+        .menu-section {
+            padding: 6rem 2rem;
+            position: relative;
+            z-index: 10;
+            background: linear-gradient(to bottom, rgba(250, 248, 243, 0.95), rgba(250, 248, 243, 0.98));
+            backdrop-filter: blur(20px);
+        }
+
+        .menu-section:nth-child(even) {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            color: var(--primary);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--bright));
+            border-radius: 2px;
+        }
+
+        /* Interactive menu grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-item {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(127, 176, 105, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .menu-item:hover::before {
+            opacity: 1;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+        }
+
+        .item-image {
+            position: relative;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            overflow: hidden;
+        }
+
+        .item-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(45, 80, 22, 0.3), rgba(127, 176, 105, 0.2));
+        }
+
+        .item-content {
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .item-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .item-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, var(--bright), #5a9b47);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(127, 176, 105, 0.3);
+        }
+
+        .add-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(127, 176, 105, 0.5);
+        }
+
+        /* Floating elements */
+        .floating-emoji {
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 5;
+            animation: floatEmoji 15s linear infinite;
+        }
+
+        @keyframes floatEmoji {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Special effects */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: sparkle 2s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--primary), #1a3d0f);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-content {
+                padding: 1rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Floating emojis -->
+    <div class="floating-emoji" style="left: 5%; animation-delay: 0s;">🥗</div>
+    <div class="floating-emoji" style="left: 25%; animation-delay: 3s;">🥑</div>
+    <div class="floating-emoji" style="left: 45%; animation-delay: 6s;">🌱</div>
+    <div class="floating-emoji" style="left: 65%; animation-delay: 9s;">🥕</div>
+    <div class="floating-emoji" style="left: 85%; animation-delay: 12s;">🍓</div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>BIO BOWLS</h1>
+            <p class="hero-tagline">Where Fresh Meets Fabulous</p>
+            <button class="hero-cta" onclick="document.querySelector('.menu-section').scrollIntoView({behavior: 'smooth'})">
+                Explore Our Menu ✨
+            </button>
+        </div>
+        <div class="sparkle" style="top: 20%; left: 15%;"></div>
+        <div class="sparkle" style="top: 70%; right: 20%; animation-delay: 0.5s;"></div>
+        <div class="sparkle" style="top: 40%; right: 10%; animation-delay: 1s;"></div>
+    </section>
+
+    <!-- Salad Bowls Section -->
+    <section class="menu-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Power-Packed Salad Bowls</h2>
+            <div class="menu-grid">
+                <div class="menu-item fade-in">
+                    <div class="item-image">🧀🥗</div>
+                    <div class="item-content">
+                        <h3 class="item-name">Fine Feta Fantasy</h3>
+                        <p class="item-description">Creamy feta meets crisp cucumbers, juicy cherry tomatoes, and vibrant lollo rosso. A Mediterranean dream in every bite!</p>
+                        <div class="item-footer">
+                            <span class="item-price">₹219</span>
+                            <!-- <button class="add-btn">Add to Cart</button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item fade-in">
+                    <div class="item-image">💪🥙</div>
+                    <div class="item-content">
+                        <h3 class="item-name">Power Protein Punch</h3>
+                        <p class="item-description">Fuel your ambitions with this protein-packed powerhouse featuring fresh beets, sweet corn, and crisp vegetables.</p>
+                        <div class="item-footer">
+                            <span class="item-price">₹179</span>
+                            <!-- <button class="add-btn">Add to Cart</button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item fade-in">
+                    <div class="item-image">🌈🥬</div>
+                    <div class="item-content">
+                        <h3 class="item-name">Full Fiber Fiesta</h3>
+                        <p class="item-description">Your gut's best friend! Colorful bell peppers, sweet corn, and crisp lettuce with our signature zesty dressing.</p>
+                        <div class="item-footer">
+                            <span class="item-price">₹149</span>
+                            <!-- <button class="add-btn">Add to Cart</button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item fade-in">
+                    <div class="item-image">✨🌾</div>
+                    <div class="item-content">
+                        <h3 class="item-name">Quinoa Queen Bowl</h3>
+                        <p class="item-description">Royal treatment for your taste buds! Fluffy quinoa crowned with garden-fresh vegetables and aromatic herbs.</p>
+                        <div class="item-footer">
+                            <span class="item-price">₹189</span>
+                            <!-- <button class="add-btn">Add to Cart</button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item fade-in">
+                    <div class="item-image">🍌🍫</div>
+                    <div class="item-content">
+                        <h3 class="item-name">Smoothie Bowl Bliss</h3>
+                        <p class="item-description">Dessert meets nutrition! Creamy banana and cocoa blend topped with chocolate chips, oats, and crunchy muesli.</p>
+                        <div class="item-footer">
+                            <span class="item-price">₹189</span>
+                            <!-- <button class="add-btn">Add to Cart</button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item fade-in">
+                    <div class="item-image">🔥🥗</div>
+                    <div class="item-content">
+                        <h3 class="item-name">Pulsed Power Bowl</h3>
+                        <p class="item-description">The perfect balance of plant-based protein and vibrant vegetables for sustained energy and pure satisfaction.</p>
+                        <div class="item-footer">
+                            <span class="item-price">₹179</span>
+                            <!-- <button class="add-btn">Add to Cart</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Granola Section -->
+    <section class="menu-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Granola Goodness</h2>
+            <div class="menu-grid">
+                <div class="menu-item fade-in">
+                    <div class="item-image">☕🍪</div>
+                    <div class="item-content">
+                        <h3 class="item-name">Brew & Chew Magic</h3>
+                        <p class="item-description">Coffee lovers rejoice! Rich coffee and warm cinnamon create the perfect chewy cookie experience.</p>
+                        <div class="item-footer">
+                            <span class="item-price">₹49</span>
+                            <!-- <button class="add-btn">Add to Cart</button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item fade-in">
+                    <div class="item-image">🫐💥</div>
+                    <div class="item-content">
+                        <h3 class="item-name">Blueberry Burst</h3>
+                        <p class="item-description">Antioxidant explosion! Sweet dried blueberries and maple syrup create a fruity wellness celebration.</p>
+                        <div class="item-footer">
+                            <span class="item-price">₹39</span>
+                            <!-- <button class="add-btn">Add to Cart</button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item fade-in">
+                    <div class="item-image">🍫🥥</div>
+                    <div class="item-content">
+                        <h3 class="item-name">Cocoa Crunch Heaven</h3>
+                        <p class="item-description">Indulgence without guilt! Dark chocolate chips, coconut, and peanut butter create the ultimate crunchy treat.</p>
+                        <div class="item-footer">
+                            <span class="item-price">₹49</span>
+                            <!-- <button class="add-btn">Add to Cart</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 BIO BOWLS • Crafted with love, served with passion 🌱✨</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add to cart functionality
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                btn.style.background = 'linear-gradient(135deg, #ff6b35, #ff8c42)';
+                btn.textContent = 'Added! ✓';
+                btn.style.transform = 'scale(1.1)';
+                
+                setTimeout(() => {
+                    btn.style.background = 'linear-gradient(135deg, var(--bright), #5a9b47)';
+                    btn.textContent = 'Add to Cart';
+                    btn.style.transform = 'scale(1)';
+                }, 2000);
+            });
+        });
+
+        // Menu item click effects
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.style.transform = 'translateY(-15px) scale(1.05)';
+                setTimeout(() => {
+                    item.style.transform = 'translateY(-15px) scale(1.02)';
+                }, 200);
+            });
+        });
+
+        // Dynamic sparkles
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        setInterval(createSparkle, 3000);
+    </script>
+</body>
+</html>
