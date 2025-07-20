@@ -170,15 +170,84 @@
 
         .menu-item {
             position: relative;
-            background: white;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            perspective: 1000px;
+            height: 450px;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-15px);
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform-style: preserve-3d;
+        }
+
+        .menu-item.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            cursor: pointer;
+            background: white;
         }
 
-        .menu-item::before {
+        .card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .card-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .card-back .flip-back-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .card-back .flip-back-btn:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        .menu-item:hover .card-front, .menu-item:hover .card-back {
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+        }
+
+        .card-front::before {
             content: '';
             position: absolute;
             top: 0;
@@ -191,13 +260,8 @@
             z-index: 1;
         }
 
-        .menu-item:hover::before {
+        .menu-item:hover .card-front::before {
             opacity: 1;
-        }
-
-        .menu-item:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
         }
 
         .item-image {
@@ -373,74 +437,122 @@
         <div class="container">
             <h2 class="section-title fade-in">Power-Packed Salad Bowls</h2>
             <div class="menu-grid">
-                <div class="menu-item fade-in">
-                    <div class="item-image">🧀🥗</div>
-                    <div class="item-content">
-                        <h3 class="item-name">Fine Feta Fantasy</h3>
-                        <p class="item-description">Creamy feta meets crisp cucumbers, juicy cherry tomatoes, and vibrant lollo rosso. A Mediterranean dream in every bite!</p>
-                        <div class="item-footer">
-                            <span class="item-price">₹219</span>
-                            <!-- <button class="add-btn">Add to Cart</button> -->
+                <div class="menu-item fade-in" data-type="salad">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="item-image">🧀🥗</div>
+                            <div class="item-content">
+                                <h3 class="item-name">Fine Feta Fantasy</h3>
+                                <p class="item-description">Creamy feta meets crisp cucumbers, juicy cherry tomatoes, and vibrant lollo rosso. A Mediterranean dream in every bite!</p>
+                                <div class="item-footer">
+                                    <span class="item-price">₹219</span>
+                                    <button class="add-btn">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <img src="fine-feta.jpg" alt="Fine Feta Fantasy" />
+                            <button class="flip-back-btn">← Back</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="menu-item fade-in">
-                    <div class="item-image">💪🥙</div>
-                    <div class="item-content">
-                        <h3 class="item-name">Power Protein Punch</h3>
-                        <p class="item-description">Fuel your ambitions with this protein-packed powerhouse featuring fresh beets, sweet corn, and crisp vegetables.</p>
-                        <div class="item-footer">
-                            <span class="item-price">₹179</span>
-                            <!-- <button class="add-btn">Add to Cart</button> -->
+                <div class="menu-item fade-in" data-type="salad">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="item-image">💪🥙</div>
+                            <div class="item-content">
+                                <h3 class="item-name">Power Protein Punch</h3>
+                                <p class="item-description">Fuel your ambitions with this protein-packed powerhouse featuring fresh beets, sweet corn, and crisp vegetables.</p>
+                                <div class="item-footer">
+                                    <span class="item-price">₹179</span>
+                                    <button class="add-btn">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <img src="power-protein.jpg" alt="Power Protein Punch" />
+                            <button class="flip-back-btn">← Back</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="menu-item fade-in">
-                    <div class="item-image">🌈🥬</div>
-                    <div class="item-content">
-                        <h3 class="item-name">Full Fiber Fiesta</h3>
-                        <p class="item-description">Your gut's best friend! Colorful bell peppers, sweet corn, and crisp lettuce with our signature zesty dressing.</p>
-                        <div class="item-footer">
-                            <span class="item-price">₹149</span>
-                            <!-- <button class="add-btn">Add to Cart</button> -->
+                <div class="menu-item fade-in" data-type="salad">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="item-image">🌈🥬</div>
+                            <div class="item-content">
+                                <h3 class="item-name">Full Fiber Fiesta</h3>
+                                <p class="item-description">Your gut's best friend! Colorful bell peppers, sweet corn, and crisp lettuce with our signature zesty dressing.</p>
+                                <div class="item-footer">
+                                    <span class="item-price">₹149</span>
+                                    <button class="add-btn">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <img src="full-fiber.jpg" alt="Full Fiber Fiesta" />
+                            <button class="flip-back-btn">← Back</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="menu-item fade-in">
-                    <div class="item-image">✨🌾</div>
-                    <div class="item-content">
-                        <h3 class="item-name">Quinoa Queen Bowl</h3>
-                        <p class="item-description">Royal treatment for your taste buds! Fluffy quinoa crowned with garden-fresh vegetables and aromatic herbs.</p>
-                        <div class="item-footer">
-                            <span class="item-price">₹189</span>
-                            <!-- <button class="add-btn">Add to Cart</button> -->
+                <div class="menu-item fade-in" data-type="salad">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="item-image">✨🌾</div>
+                            <div class="item-content">
+                                <h3 class="item-name">Quinoa Queen Bowl</h3>
+                                <p class="item-description">Royal treatment for your taste buds! Fluffy quinoa crowned with garden-fresh vegetables and aromatic herbs.</p>
+                                <div class="item-footer">
+                                    <span class="item-price">₹189</span>
+                                    <button class="add-btn">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <img src="qute-quinoa.jpg" alt="Quinoa Queen Bowl" />
+                            <button class="flip-back-btn">← Back</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="menu-item fade-in">
-                    <div class="item-image">🍌🍫</div>
-                    <div class="item-content">
-                        <h3 class="item-name">Smoothie Bowl Bliss</h3>
-                        <p class="item-description">Dessert meets nutrition! Creamy banana and cocoa blend topped with chocolate chips, oats, and crunchy muesli.</p>
-                        <div class="item-footer">
-                            <span class="item-price">₹189</span>
-                            <!-- <button class="add-btn">Add to Cart</button> -->
+                <div class="menu-item fade-in" data-type="salad">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="item-image">🍌🍫</div>
+                            <div class="item-content">
+                                <h3 class="item-name">Smoothie Bowl Bliss</h3>
+                                <p class="item-description">Dessert meets nutrition! Creamy banana and cocoa blend topped with chocolate chips, oats, and crunchy muesli.</p>
+                                <div class="item-footer">
+                                    <span class="item-price">₹189</span>
+                                    <button class="add-btn">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <img src="smoothie-bowl.jpg" alt="Smoothie Bowl Bliss" />
+                            <button class="flip-back-btn">← Back</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="menu-item fade-in">
-                    <div class="item-image">🔥🥗</div>
-                    <div class="item-content">
-                        <h3 class="item-name">Pulsed Power Bowl</h3>
-                        <p class="item-description">The perfect balance of plant-based protein and vibrant vegetables for sustained energy and pure satisfaction.</p>
-                        <div class="item-footer">
-                            <span class="item-price">₹179</span>
-                            <!-- <button class="add-btn">Add to Cart</button> -->
+                <div class="menu-item fade-in" data-type="salad">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="item-image">🔥🥗</div>
+                            <div class="item-content">
+                                <h3 class="item-name">Pulsed Power Bowl</h3>
+                                <p class="item-description">The perfect balance of plant-based protein and vibrant vegetables for sustained energy and pure satisfaction.</p>
+                                <div class="item-footer">
+                                    <span class="item-price">₹179</span>
+                                    <button class="add-btn">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <img src="pulsed-bowl.jpg" alt="Pulsed Power Bowl" />
+                            <button class="flip-back-btn">← Back</button>
                         </div>
                     </div>
                 </div>
@@ -460,7 +572,7 @@
                         <p class="item-description">Coffee lovers rejoice! Rich coffee and warm cinnamon create the perfect chewy cookie experience.</p>
                         <div class="item-footer">
                             <span class="item-price">₹49</span>
-                            <!-- <button class="add-btn">Add to Cart</button> -->
+                            <button class="add-btn">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -472,7 +584,7 @@
                         <p class="item-description">Antioxidant explosion! Sweet dried blueberries and maple syrup create a fruity wellness celebration.</p>
                         <div class="item-footer">
                             <span class="item-price">₹39</span>
-                            <!-- <button class="add-btn">Add to Cart</button> -->
+                            <button class="add-btn">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -484,7 +596,7 @@
                         <p class="item-description">Indulgence without guilt! Dark chocolate chips, coconut, and peanut butter create the ultimate crunchy treat.</p>
                         <div class="item-footer">
                             <span class="item-price">₹49</span>
-                            <!-- <button class="add-btn">Add to Cart</button> -->
+                            <button class="add-btn">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -530,12 +642,33 @@
             });
         });
 
-        // Menu item click effects
-        document.querySelectorAll('.menu-item').forEach(item => {
+        // Card flip functionality for salads
+        document.querySelectorAll('.menu-item[data-type="salad"]').forEach(item => {
+            item.addEventListener('click', (e) => {
+                // Don't flip if clicking on buttons
+                if (e.target.classList.contains('add-btn') || e.target.classList.contains('flip-back-btn')) {
+                    return;
+                }
+                
+                item.classList.toggle('flipped');
+            });
+        });
+
+        // Flip back button functionality
+        document.querySelectorAll('.flip-back-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const menuItem = btn.closest('.menu-item');
+                menuItem.classList.remove('flipped');
+            });
+        });
+
+        // Menu item hover effects (for non-salad items)
+        document.querySelectorAll('.menu-item:not([data-type="salad"])').forEach(item => {
             item.addEventListener('click', () => {
                 item.style.transform = 'translateY(-15px) scale(1.05)';
                 setTimeout(() => {
-                    item.style.transform = 'translateY(-15px) scale(1.02)';
+                    item.style.transform = 'translateY(-15px)';
                 }, 200);
             });
         });
